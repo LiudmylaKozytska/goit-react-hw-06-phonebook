@@ -18,6 +18,7 @@ export const Title = styled.h2`
 `;
 
 export const Input = styled.input`
+  margin-left: 16px;
   font-size: 18px;
   padding: 4px 4px 4px 30px;
   border: none;
@@ -59,6 +60,6 @@ export const Label = styled.label`
 export const FormIcon = styled.div`
   position: absolute;
   top: 50%;
-  left: 6%;
+  left: 10%;
   transform: translate(-50%, -50%);
 `;

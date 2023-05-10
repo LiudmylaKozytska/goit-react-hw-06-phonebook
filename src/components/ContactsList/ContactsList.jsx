@@ -3,19 +3,20 @@ import { ContactItem } from 'components/ContactItem/ContactItem';
 import { List } from './ContactListStyle';
 import { getContacts, getFilter } from 'redux/selectors';
 
-const getVisibleContacts = (contacts, filter) => {
-  if (!contacts) {
-    return [];
-  }
-  return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-};
-
 export const ContactsList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
+
+  const getVisibleContacts = (contacts, filter) => {
+    return contacts.filter(
+      contact =>
+        contact.name &&
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   const visibleContacts = getVisibleContacts(contacts, filter);
+  console.log(visibleContacts);
   return (
     <List>
       {visibleContacts.map(({ id, name, number, onClick }) => (

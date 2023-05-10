@@ -22,7 +22,6 @@ export const ContactForm = () => {
     const name = formData.get('name');
     const number = formData.get('number');
     const contact = { name, number };
-    console.log(contact);
     dispatch(addContact(contact));
     form.reset();
   };

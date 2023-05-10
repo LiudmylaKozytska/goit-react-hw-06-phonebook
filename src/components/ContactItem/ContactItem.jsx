@@ -4,7 +4,7 @@ import { Item, Button } from './ContactItemStyle';
 import { ReactComponent as DeleteIcon } from '../icons/deleteIcon.svg';
 import { deleteContact } from 'redux/contactsSlice';
 
-export const ContactItem = ({ id, name, number }) => {
+export const ContactItem = ({ id, name, number, onClick }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => dispatch(deleteContact(id));
@@ -23,5 +23,5 @@ ContactItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  // onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

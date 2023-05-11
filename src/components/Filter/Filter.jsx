@@ -1,16 +1,8 @@
-import { useDispatch } from 'react-redux';
-import { setFilter } from 'redux/filterSlice';
-
+import PropTypes from 'prop-types';
 import { Title, Input } from 'components/ContactForm/ContactFormStyle';
 import { Label } from './FilterStyle';
 
-export const FilterContacts = () => {
-  const dispatch = useDispatch();
-
-  const handleFilterChange = e => {
-    dispatch(setFilter(e.target.value));
-  };
-
+export const FilterContacts = ({ value, onChange }) => {
   return (
     <>
       <Title>Contacts</Title>
@@ -19,9 +11,15 @@ export const FilterContacts = () => {
         <Input
           type="text"
           placeholder="Type name"
-          onChange={handleFilterChange}
+          value={value}
+          onChange={onChange}
         ></Input>
       </Label>
     </>
   );
+};
+
+FilterContacts.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

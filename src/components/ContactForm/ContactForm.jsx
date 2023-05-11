@@ -1,5 +1,8 @@
-import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+import React, { useState, useEffect } from 'react';
+import {
+  alertContactInclude,
+  alertAddContactSuccess,
+} from 'components/Alert/Alert';
 import {
   TabletContainer,
   Title,
@@ -11,21 +14,38 @@ import {
 import { ReactComponent as CallIcon } from '../icons/callIcon.svg';
 import { ReactComponent as PersonIcon } from '../icons/personIcon.svg';
 
-export const ContactForm = () => {
-  const dispatch = useDispatch();
+export const ContactForm = ({ onSubmit, contacts }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    setIsDisabled(!name && !number);
+  }, [name, number]);
 
   const handleSubmit = event => {
     event.preventDefault();
+    const contactIncludes = contacts.some(contact => contact.name === name);
 
-    const form = event.target;
-    const formData = new FormData(form);
-    const name = formData.get('name');
-    const number = formData.get('number');
-    const contact = { name, number };
-    dispatch(addContact(contact));
-    form.reset();
+    if (contactIncludes) {
+      alertContactInclude(name);
+      return;
+    } else {
+      alertAddContactSuccess();
+    }
+
+    onSubmit({ name, number });
+    setName('');
+    setNumber('');
   };
 
+  const handleNameChange = event => {
+    setName(event.currentTarget.value);
+  };
+
+  const handleNumberChange = event => {
+    setNumber(event.currentTarget.value);
+  };
   return (
     <form onSubmit={handleSubmit}>
       <Title>Phonebook</Title>
@@ -40,8 +60,8 @@ export const ContactForm = () => {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             placeholder="Type name"
-            // value={name}
-            // onChange={handleNameChange}
+            value={name}
+            onChange={handleNameChange}
             required
           />
         </Label>
@@ -56,12 +76,14 @@ export const ContactForm = () => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             placeholder="Type number"
             required
-            // value={number}
-            // onChange={handleNumberChange}
+            value={number}
+            onChange={handleNumberChange}
           />
         </Label>
 
-        <Button type="submit">Add contact</Button>
+        <Button type="submit" disabled={isDisabled}>
+          Add contact
+        </Button>
       </TabletContainer>
     </form>
   );

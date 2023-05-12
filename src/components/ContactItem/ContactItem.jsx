@@ -1,13 +1,18 @@
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contactsSlice';
+import { alertDeleteContactSuccess } from 'components/Alert/Alert';
 import { Item, Button } from './ContactItemStyle';
 import { ReactComponent as DeleteIcon } from '../icons/deleteIcon.svg';
-import { deleteContact } from 'redux/contactsSlice';
 
-export const ContactItem = ({ id, name, number, onClick }) => {
+export const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
 
-  const handleDelete = () => dispatch(deleteContact(id));
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+
+    alertDeleteContactSuccess(name);
+  };
 
   return (
     <Item key={id}>

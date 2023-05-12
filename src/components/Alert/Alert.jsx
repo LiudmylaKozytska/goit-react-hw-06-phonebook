@@ -8,11 +8,21 @@ export const alertContactInclude = name => {
   });
 };
 
-export const alertAddContactSuccess = () => {
+export const alertAddContactSuccess = name => {
   Swal.fire({
     position: 'top-end',
     icon: 'success',
-    title: 'Your contact has been saved',
+    title: `Your contact ${name} has been saved`,
+    showConfirmButton: false,
+    timer: 1500,
+  });
+};
+
+export const alertDeleteContactSuccess = name => {
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: `Your contact ${name} was deleted`,
     showConfirmButton: false,
     timer: 1500,
   });
